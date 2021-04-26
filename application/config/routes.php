@@ -61,5 +61,3 @@ $route['admin/category/store']['post'] = "categoryController/store";
 $route['admin/category/edit/(:num)'] = "categoryController/edit/$1";
 $route['admin/category/update/(:num)']['post'] = "categoryController/update/$1";
 $route['admin/category/delete/(:num)']['delete'] = "categoryController/delete/$1";
-
-
