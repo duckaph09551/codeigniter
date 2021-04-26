@@ -4,7 +4,7 @@
 			$query =	$this->db->select('name,category.id, COUNT(post.cate_id) as totally')
          ->from('category')
          ->join('post', 'post.cate_id = category.id','left outer')
-         ->group_by('post.cate_id')
+         ->group_by('post.cate_id,category.id,name')
          ->get();
 	   	return $query->result_array();
 
