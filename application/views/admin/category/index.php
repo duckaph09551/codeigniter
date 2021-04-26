@@ -11,7 +11,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Thêm danh mục</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Thêm Danh mục</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -20,7 +20,7 @@
             <div class="modal-body">
               <div class="form-group">
                 <label for="exampleInputEmail1">Name <span class="text-danger font-weight-bold">(*)</span></label>
-                <input type="text" name="name" class="form-control " id="exampleInputEmail1" aria-describedby="name"
+                <input type="text" name="name" class="form-control " id="name" aria-describedby="name"
                   placeholder="Ten">
               </div>
             </div>
@@ -32,6 +32,37 @@
         </div>
       </div>
     </div>
+
+    <!-- edit  -->
+    <div class="modal fade" id="exampleModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Danh mục</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="post">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Name <span class="text-danger font-weight-bold">(*)</span></label>
+                <input type="text" name="name" class="form-control " id="nameEdit" aria-describedby="name"
+                  placeholder="Ten">
+                <input type="hidden" name="id" id="ids">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="EditCategoriesSave()">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- // -->
     <table class="table table-striped" id="myTable">
       <thead>
         <tr>
@@ -73,7 +104,7 @@ function showProject() {
           <td>${kq.data[i].totally}</td>
           <td>
             <a href="#" class="btn btn-danger xoa" onclick="dlt(${kq.data[i].id})"> <i class="fa fa-times"></i></a>
-            <a href="#" class="btn btn-warning xoa"  > <i class="fa fa-pencil" ></i></a>
+            <a href="#" class="btn btn-warning xoa" data-toggle="modal" data-target="#exampleModalEdit"  onclick="edit(${kq.data[i].id})"> <i class="fa fa-pencil" ></i></a>
           </td>
         </tr>
 			`;
@@ -115,22 +146,66 @@ function dlt(id) {
 }
 
 function addCategories() {
+  $.ajax({
+ 		url: '<?php  echo base_url(); ?>admin/category/store',
+ 		type: 'POST',
+ 		dataType: 'json',
+ 		data: {
+ 			name: $('#name').val(),
+ 		},
+ 	 	})
+ 	 	.done(function() {
+ 	 	       swal("Thêm dữ liệu thành công", "", "success");
+             var x = document.querySelector(".swal-button--confirm");
+                                x.addEventListener('click', function() {
+                                  showProject();
+                                })
 
-  const name = document.querySelector('[name="name"]').value;
-  const options = {
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8',
-      "Access-Control-Allow-Origin": "*",
-    }
-  };
-  axios.post("<?php  echo base_url(); ?>admin/category/store", {
-      name
-    }, options)
-    .then(data => {
-      if (data.statusText === "Created") {
-        swal("Thêm dữ liệu thành công", "", "success");
-      }
-    })
+ 	 	})
+ 	 	.fail(function() {
+ 	 		console.log("error");
+ 	 	})
+ 	 	.always(function() {
+ 	 		console.log("complete");
+ 	 	});
 
 }
+
+function edit(id){
+  axios.get('<?php  echo base_url(); ?>admin/category/edit/'+id)
+          .then(response => {
+            let kq = response;
+            // console.log(kq);
+            document.getElementById("nameEdit").value = kq.data.name;
+            document.getElementById("ids").value = kq.data.id;
+          })
+}
+function EditCategoriesSave(){
+    let id = $('#ids').val();
+    $.ajax({
+ 		url: '<?php  echo base_url(); ?>admin/category/update/'+id,
+ 		type: 'POST',
+ 		dataType: 'json',
+ 		data: {
+        id,
+ 		  	name: $('#nameEdit').val(),
+ 		},
+ 	 	})
+ 	 	.done(function() {
+ 	 	       swal("Sửa dữ liệu thành công", "", "success");
+             var x = document.querySelector(".swal-button--confirm");
+                                x.addEventListener('click', function() {
+                                  showProject();
+                                })
+
+ 	 	})
+ 	 	.fail(function() {
+ 	 		console.log("error");
+ 	 	})
+ 	 	.always(function() {
+ 	 		console.log("complete");
+ 	 	});
+
+}
+
 </script>

@@ -59,5 +59,7 @@ $route['admin/category/show'] = "categoryController/show_all";
 $route['admin/category/create'] = "categoryController/create";
 $route['admin/category/store']['post'] = "categoryController/store";
 $route['admin/category/edit/(:num)'] = "categoryController/edit/$1";
-$route['admin/category/update/(:num)']['put'] = "categoryController/update/$1";
+$route['admin/category/update/(:num)']['post'] = "categoryController/update/$1";
 $route['admin/category/delete/(:num)']['delete'] = "categoryController/delete/$1";
+
+
