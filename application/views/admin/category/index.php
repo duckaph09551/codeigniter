@@ -147,65 +147,65 @@ function dlt(id) {
 
 function addCategories() {
   $.ajax({
- 		url: '<?php  echo base_url(); ?>admin/category/store',
- 		type: 'POST',
- 		dataType: 'json',
- 		data: {
- 			name: $('#name').val(),
- 		},
- 	 	})
- 	 	.done(function() {
- 	 	       swal("Thêm dữ liệu thành công", "", "success");
-             var x = document.querySelector(".swal-button--confirm");
-                                x.addEventListener('click', function() {
-                                  showProject();
-                                })
+      url: '<?php  echo base_url(); ?>admin/category/store',
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        name: $('#name').val(),
+      },
+    })
+    .done(function() {
+      swal("Thêm dữ liệu thành công", "", "success");
+      var x = document.querySelector(".swal-button--confirm");
+      x.addEventListener('click', function() {
+        showProject();
+      })
 
- 	 	})
- 	 	.fail(function() {
- 	 		console.log("error");
- 	 	})
- 	 	.always(function() {
- 	 		console.log("complete");
- 	 	});
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
 
 }
 
-function edit(id){
-  axios.get('<?php  echo base_url(); ?>admin/category/edit/'+id)
-          .then(response => {
-            let kq = response;
-            // console.log(kq);
-            document.getElementById("nameEdit").value = kq.data.name;
-            document.getElementById("ids").value = kq.data.id;
-          })
+function edit(id) {
+  axios.get('<?php  echo base_url(); ?>admin/category/edit/' + id)
+    .then(response => {
+      let kq = response;
+      // console.log(kq);
+      document.getElementById("nameEdit").value = kq.data.name;
+      document.getElementById("ids").value = kq.data.id;
+    })
 }
-function EditCategoriesSave(){
-    let id = $('#ids').val();
-    $.ajax({
- 		url: '<?php  echo base_url(); ?>admin/category/update/'+id,
- 		type: 'POST',
- 		dataType: 'json',
- 		data: {
+
+function EditCategoriesSave() {
+  let id = $('#ids').val();
+  $.ajax({
+      url: '<?php  echo base_url(); ?>admin/category/update/' + id,
+      type: 'POST',
+      dataType: 'json',
+      data: {
         id,
- 		  	name: $('#nameEdit').val(),
- 		},
- 	 	})
- 	 	.done(function() {
- 	 	       swal("Sửa dữ liệu thành công", "", "success");
-             var x = document.querySelector(".swal-button--confirm");
-                                x.addEventListener('click', function() {
-                                  showProject();
-                                })
+        name: $('#nameEdit').val(),
+      },
+    })
+    .done(function() {
+      swal("Sửa dữ liệu thành công", "", "success");
+      var x = document.querySelector(".swal-button--confirm");
+      x.addEventListener('click', function() {
+        showProject();
+      })
 
- 	 	})
- 	 	.fail(function() {
- 	 		console.log("error");
- 	 	})
- 	 	.always(function() {
- 	 		console.log("complete");
- 	 	});
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
 
 }
-
 </script>
